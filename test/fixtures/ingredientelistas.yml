@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ingrediente: MyString
+  unidad: MyString
+  cantidad: 1.5
+  menu: 1
+
+two:
+  ingrediente: MyString
+  unidad: MyString
+  cantidad: 1.5
+  menu: 1

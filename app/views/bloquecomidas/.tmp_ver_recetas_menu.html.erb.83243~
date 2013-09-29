@@ -1,0 +1,44 @@
+<hr>
+<% cantidad_ingredientes = @menu.cantidad_ingredientes_lista %>
+<% if cantidad_ingredientes == 0 %>
+	<% form_for "generar_lista_compra",:url => {:action => "generar_lista_compra"} do |f| %>
+		<%= f.hidden_field "menu",:value => @menu.id %>
+		<%= f.submit "Generar" %> lista de la compra.
+	<% end %>
+<% else %>
+	<% form_for "ver_lista_compra",:url => {:action => "ver_lista_compra"} do |f| %>
+		<%= f.hidden_field "menu",:value => @menu.id %>
+		<%= f.submit "Ver" %> lista de la compra.
+	<% end %>
+	<hr>
+	<% form_for "eliminar_lista_compra",:url => {:action => "eliminar_lista_compra"} do |f| %>
+		<%= f.hidden_field "menu",:value => @menu.id %>
+		<%= f.submit "Borrar" %> lista de la compra actual.
+	<% end %>
+<% end %>
+<hr>
+
+<br>
+<% for dia in (1..@dias) %>
+	<hr>
+	Día <%= dia.to_s %>
+	<table id="borders">
+		<% for bloque in @bloques %>
+			<tr><th colspan=2><%= bloque.nombre %></th></tr>
+			<% platobloques=Platobloque.find(:all,:conditions => "bloque = "+bloque.id.to_s) %>
+			<% for platobloque in platobloques %>
+				<tr>
+					<td>
+						<% recetamenu = get_recetamenu(@menu.id,dia.to_i,platobloque.id) %>
+						<% receta = get_receta_menu(@menu.id,dia.to_i,platobloque.id) %>
+						<%= receta.nombre %>
+						<% if cantidad_ingredientes == 0 %>
+							<%= link_to "recalcular",:action => "recalcular_recetamenu",:id => recetamenu.id.to_s%>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		<% end %>
+	</table>
+	<br>
+<% end %>

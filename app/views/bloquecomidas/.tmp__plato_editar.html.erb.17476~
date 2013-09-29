@@ -1,0 +1,53 @@
+	
+	<% remote_form_for "bloquecomida",:url => {:action => "modificar_bloquecomidaetiquetas"},:update => "platobloque_"+platobloque.id.to_s do |f| %>
+		<%= f.hidden_field "platobloque",:value => platobloque.id.to_s %>
+		<%= f.hidden_field "accion_"+platobloque.id.to_s,:value => 0 %>
+		<table id="borders" align="center">
+			<tr>
+				<td colspan=4>
+				Personas: 
+				<%= f.text_field "personas",:value => platobloque.personas.to_i.to_s,:size => 3 %>
+				</td>
+			</tr>
+			<tr>
+				<th>Etiqueta</th>
+				<th>Comprobar</th>
+				<th>Obligatoria</th>
+				<th>Prohibida</th>
+			</tr>
+			<% pbe = Platobloqueetiqueta.new %>
+			<% for e in etiquetas %>
+				<tr>
+					<td>
+						<%= image_tag("etiqueta-icon.png", :border=>0, :height => "20px",:width => "20px")%> <%= e.nombre %>
+					</td>	
+					<td>
+						<% if pbe.esta_activo(platobloque.id,e.id) == true %>
+							<%= f.check_box "bloque_"+platobloque.id.to_s+"_"+e.id.to_s,:checked => true %>
+							<% valor = pbe.get_valor(platobloque.id,e.id).valor %>
+							<% estado = false %>
+						<% else %>
+							<% estado = true %>
+							<% valor = -1 %>
+							<%= f.check_box "bloque_"+platobloque.id.to_s+"_"+e.id.to_s %>
+							<%= f.hidden_field "valor_"+platobloque.id.to_s+"_"+e.id.to_s,:value => 1 %>
+						<% end %>
+					</td>
+					<td>
+						<span style="font-size:70%;"><%= f.radio_button "valor_"+platobloque.id.to_s+"_"+e.id.to_s,1,:checked => (valor==1),:disabled => estado %>SI</span>	
+					</td>
+					<td>
+						<span style="font-size:70%;"><%= f.radio_button "valor_"+platobloque.id.to_s+"_"+e.id.to_s,0,:checked => (valor==0),:disabled => estado %>NO</span>	
+					</td>
+					
+				</tr>
+			<% end %>
+			<tr>
+				<td colspan=4 align="center">
+					<%= f.submit "Guardar",:onclick => "document.getElementById('bloquecomida_accion_"+platobloque.id.to_s+"').value = 0;"  %>
+					<%= f.submit "Guardar y Listo",:onclick => "document.getElementById('bloquecomida_accion_"+platobloque.id.to_s+"').value = 1;" %>
+					<%= f.submit "Listo",:onclick => "document.getElementById('bloquecomida_accion_"+platobloque.id.to_s+"').value = 2;" %>
+				</td>
+			</tr>
+		</table>
+	<% end %>

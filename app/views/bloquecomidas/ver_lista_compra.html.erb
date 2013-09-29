@@ -1,0 +1,14 @@
+<br>
+<table id="borders">
+	<% lasttipo = ""%>
+	<% for ingrediente in @ingredientes %>
+		<% if lasttipo != ingrediente.tipo %>
+			<th><%= ingrediente.tipo %></th>
+		<% end %>
+		<tr>
+			<td><%= ingrediente.cantidad %> <%= ingrediente.unidad %> de <%= ingrediente.ingrediente %></td>
+		</tr>
+		<% lasttipo=ingrediente.tipo%>
+	<% end %>
+</table>
+<br>

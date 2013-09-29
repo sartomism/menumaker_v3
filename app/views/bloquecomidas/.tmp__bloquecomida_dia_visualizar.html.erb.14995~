@@ -1,0 +1,62 @@
+	<table id="borders">
+		<tr>
+		<% n_dia = 1%>
+		<% for dia in dias %>
+			<td>
+				<% if dia.to_i == dia_actual.to_i %>
+					<div>
+						Día <%= n_dia.to_s %>
+					</div>
+				<% else  %>
+					<%= link_to_remote "Día "+n_dia.to_s,:url => {:action => "cambiar_dia",:layout => layout,:dia => dia },:update => "general",:class => "link_aviso" %>
+				<% end %>
+			</td>
+			<% n_dia+=1 %>
+		<% end %>
+		<td>
+			<%= link_to_remote 'Nuevo dia', :url => {:action => "nuevo_bloque",:dia => dias.last.to_i+1,:layout => @layout,:id => "ALL"},:update => "general" %>
+		</td>
+		<td style="border:0px;"></td>
+		</tr>
+		<tr><td colspan=<%= dias.size+2%>>
+				<table id="borders" algin="center">
+				<% pbe = Platobloqueetiqueta.new %>
+				
+				<% first = bloquecomidas.first %>
+				<% last = bloquecomidas.last %>
+				<% for bloquecomida in bloquecomidas %>
+					<% pbs=Platobloque.find(:all,:conditions => "bloque = "+bloquecomida.id.to_s) %>
+					<tr>
+						<th id="bloquecomida_<%= bloquecomida.id.to_s %>">
+							<%= render_partial(:partial => "bloquecomida_visualizar",:locals => {:bloquecomida => bloquecomida}) %>	
+						</th>
+					</tr>
+					<% for pb in pbs %>
+						<tr>
+							<td>
+								<div id="platobloque_<%= pb.id.to_s %>">
+									<%= render_partial(:partial => "plato_visualizar",:locals => {:platobloque => pb}) %>	
+								</div>	
+							</td>
+						</tr>
+					<%end%>
+				<% end %>
+				<tr>
+					<th>
+						<div align="center">
+							<%= link_to_remote 'Nuevo bloque', :url => {:action => "nuevo_bloque",:dia => dia_actual,:layout => @layout,:id => "ALL"},:update => "general" %>
+						</div>
+					</th>
+				</tr>
+				</table>
+		</td></tr>
+		<% if dias.size > 1 %>
+			<tr>
+				<th colspan=<%= dias.size+2%>>
+						<%= link_to_remote "Borrar Día",:url => {:action => "borrar_dia",:layout => layout,:dia => dia_actual },:update => "general",:class => "link_aviso" %>
+				</th>
+			</tr>
+		<% end %>
+	</table>
+	<br>
+	

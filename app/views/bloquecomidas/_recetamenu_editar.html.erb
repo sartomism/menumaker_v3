@@ -1,0 +1,11 @@
+<td>
+	<% receta = Receta.find(recetamenu.receta) %>
+	<%= receta.nombre rescue "DESCONOCIDA"%>
+</td>
+<td>
+	<% remote_form_for "recetamenu",:url => {:action => "guardar_recetamenu"},:update => "RECETA_MENU_"+recetamenu.id.to_s do |f| %>
+		<%= f.hidden_field "recetamenu",:value => recetamenu.id %> 
+		<%= f.text_field "personas",:value => recetamenu.personas ,:size => 3%> 
+		<%= f.submit "Guardar" %> 
+	<% end %>
+</td>

@@ -1,0 +1,16 @@
+<div align="left" style="float:left;">
+	<%= image_tag("plato-icon.png", :border=>0, :height => "20px",:width => "20px")%> <%= get_descripcion_plato(platobloque)%>
+	<span style="font-size:10px;color:#AAA;">
+		(<%= platobloque.personas.to_i.to_s %> Personas)
+		<% rs = platobloque.get_recetas %>
+		<% if rs.size > 0 %>
+			<%= rs.size %> Recetas Posibles <%= select_tag "test",options_for_select(rs.map {|r| r.nombre}),:readonly=>true%>
+		<% else %>
+			<span style="font-weight:bolder;color:#F00;">No existen recetas disponibles</span>
+		<% end %>
+	</span>
+</div>
+<div align="right" class="options" >
+	<%= link_to_remote image_tag("etiqueta-icon.png", :border=>0, :height => "20px",:width => "20px"),:url => {:action => "editar_editar_bloquecomida",:platobloque => platobloque.id},:update => "platobloque_"+platobloque.id.to_s,:html =>{:class => "image_link"} %>
+	<%= link_to_remote image_tag("del-plato-icon.png", :border=>0, :height => "20px",:width => "20px"),:url => {:action => "borrar_editar_bloquecomida",:platobloque => platobloque.id},:confirm => "Esta seguro?",:update => "general",:html =>{:class => "image_link"} %>
+</div>

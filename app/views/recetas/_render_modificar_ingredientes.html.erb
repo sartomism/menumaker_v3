@@ -1,0 +1,24 @@
+<script>
+	highline(2);
+</script>
+
+<fieldset>
+	<legend>
+		<%= image_tag("ingredientes.png", :border=>0, :height => "75px",:width => "75px") %>
+	</legend>
+	<table>
+		<tr>
+			<td>
+			  	<div id="ingredientes_incluidos">
+					<%= render_partial(:partial => "render_ingredientes_incluidos",:locals => {:receta => receta, :ingredientes_incluidos => ingredientes_incluidos}) %>
+				</div>
+			</td>
+			<td>
+			  	<div id="ingredientes_disponibles_total">
+					<%= render_partial(:partial => "render_ingredientes_disponibles_total",:locals => {:pagina => (pagina rescue 0),:receta => receta, :ingredientes_excluidos => ingredientes_excluidos,:etiquetaings=>etiquetaings,:filtro_nombre => "",:filtro_tipo => 0}) %>
+				</div>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+

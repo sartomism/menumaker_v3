@@ -1,0 +1,43 @@
+<hr>
+<% cantidad_ingredientes = @menu.cantidad_ingredientes_lista %>
+<% if cantidad_ingredientes == 0 %>
+	<% form_for "generar_lista_compra",:url => {:action => "generar_lista_compra"} do |f| %>
+		<%= f.hidden_field "menu",:value => @menu.id %>
+		<%= f.submit "Generar" %> lista de la compra.
+	<% end %>
+<% else %>
+	<% form_for "ver_lista_compra",:url => {:action => "ver_lista_compra"} do |f| %>
+		<%= f.hidden_field "menu",:value => @menu.id %>
+		<%= f.submit "Ver" %> lista de la compra.
+	<% end %>
+	<hr>
+	<% form_for "eliminar_lista_compra",:url => {:action => "eliminar_lista_compra"} do |f| %>
+		<%= f.hidden_field "menu",:value => @menu.id %>
+		<%= f.submit "Borrar" %> lista de la compra actual.
+	<% end %>
+<% end %>
+<hr>
+
+<br>
+<% for dia in (1..@dias) %>
+	<hr>
+	Día <%= dia.to_s %>
+	<% nombrebloque="" %>
+	<table id="borders">
+		<% recetamenus=Recetamenu.find(:all,:conditions => "dia = "+dia.to_s) %>
+		<% for recetamenu in recetamenus %>
+			<% if nombrebloque != recetamenu.nombrebloque %>
+				<tr><th colspan=2><%= recetamenu.nombrebloque %></th></tr>
+				<% nombrebloque=recetamenu.nombrebloque %>
+			<% end %>
+			<tr id="RECETA_MENU_<%= recetamenu.id.to_s %>">
+				<%= render_partial(:partial => "recetamenu_visualizar",
+					:locals => {
+						:cantidad_ingredientes => cantidad_ingredientes,
+						:recetamenu => recetamenu 
+					}) %>	
+			</tr>
+		<% end %>
+	</table>
+	<br>
+<% end %>

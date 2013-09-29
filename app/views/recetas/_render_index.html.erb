@@ -1,0 +1,61 @@
+<br>
+<br>
+<table align="center">
+	<tr>
+		<td>
+		<fieldset>
+			<legend>
+				<%= image_tag("cookbook.png", :border=>0, :height => "75px",:width => "75px") %>
+			</legend>
+		
+			<table align="center">
+			  	<tr>
+				    <th>Recetas propias</th>
+				    <th>Recetas de los demas</th>
+			  	</tr>	
+							
+			  	<tr>
+				  	<td>
+				  		<table>
+							<% for receta in recetas %>
+							  <tr>
+							    <td><%=h receta.nombre %></td>
+							    <td><%= link_to 'Ficha', edit_receta_path(receta) %></td>
+							  </tr>
+							<% end %>
+				  		</table>
+					</td>
+					<td>
+						<table>
+							<% for receta in recetas_demas %>
+							  <tr>
+							    <td><%=h receta.nombre %></td>
+							    <td><%= link_to 'Ficha', edit_receta_path(receta) %></td>
+							  </tr>
+							<% end %>
+						</table>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<a id="necesito_nueva_receta_link" align="center" class="link_aviso" onclick="show_element('necesito_nueva_receta_code');hide_element('necesito_nueva_receta_link');">
+							Necesito una nueva Rectea
+						</a>
+						<div id="necesito_nueva_receta_code" style="display:none;">
+							Nueva Receta:
+							<% remote_form_for "nueva_receta",:url => {:action => "crear_receta"},:update => "general" do |f| %>
+								<%= f.hidden_field "usuario",:value => 1 %>
+								<%= f.text_field "nombre" %>
+								<%= f.submit "Crear" %>
+							<% end %>
+						</div>
+					</td>
+				</tr>
+				
+			</table>
+		</fieldset>
+	</td>
+	</tr>
+</table>
+<br />

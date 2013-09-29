@@ -1,0 +1,84 @@
+<br><br>
+<% form_for "bloquecomida",:url => {:action => "modificar_bloquecomidaetiquetas"} do |f| %>
+
+	<table id="borders" algin="center">
+	<% pbe = Platobloqueetiqueta.new %>
+	
+	<% first = @bloquecomidas.first %>
+	<% last = @bloquecomidas.last %>
+		
+	<% for bloquecomida in @bloquecomidas %>
+		<% pbs=Platobloque.find(:all,:conditions => "bloque = "+bloquecomida.id.to_s) %>
+	  <tr>
+	    <th>
+			<% if bloquecomida.orden > (first.orden rescue 1000) %>
+				<%= link_to 'Subir', {:action => "subir_bloquecomida",:bloquecomida => bloquecomida.id,:id => "ALL"} %> |
+			<% end%>
+	    	<%=h bloquecomida.nombre %>
+			<% if bloquecomida.orden < (last.orden rescue 1000) %>
+				| <%= link_to 'Bajar', {:action => "bajar_bloquecomida",:bloquecomida => bloquecomida.id,:id => "ALL"} %>
+			<% end%>
+		</th>
+		<th>
+			<%= link_to 'Nuevo Plato', :action => "anadir_nuevo_plato",:id => bloquecomida.id %>
+		</th>
+		<th>
+	    	<%= link_to 'Eliminar', bloquecomida, :confirm => 'Are you sure?', :method => :delete %></td>
+		</th>
+	  </tr>
+	  <tr>
+	    <td colspan=3>
+	    	<table id="borders">
+				<tr>
+					<% for e in @etiquetas %>
+						<th align="center">
+							<%= e.nombre %>
+						</th>
+					<% end %>
+				</tr>
+	    		<% for pb in pbs %>
+					<tr>
+						<% for e in @etiquetas %>
+							<td align="center">
+								<% if pbe.esta_activo(pb.id,e.id) == true %>
+									<%= f.check_box "bloque_"+pb.id.to_s+"_"+e.id.to_s,:checked => true %>
+									<br>
+									<% valor = pbe.get_valor(pb.id,e.id).valor %>
+									<span style="font-size:70%;"><%= f.radio_button "valor_"+pb.id.to_s+"_"+e.id.to_s,1,:checked => (valor==1) %>SI</span>
+									<br>
+									<span style="font-size:70%;"><%= f.radio_button "valor_"+pb.id.to_s+"_"+e.id.to_s,0,:checked => (valor==0) %>NO</span>
+								<% else %>
+									<%= f.check_box "bloque_"+pb.id.to_s+"_"+e.id.to_s %>
+									<%= f.hidden_field "valor_"+pb.id.to_s+"_"+e.id.to_s,:value => 1 %>
+								<% end %>
+							</td>
+						<% end %>
+					</tr>
+					<tr>
+						<td colspan=<%= @etiquetas.size-1 %>>
+							<% rs = pb.get_recetas %>
+							<% if rs.size > 0 %>
+								Recetas Posibles (<%= rs.size %>): <%= f.select "test",rs.map {|r| r.nombre} %>
+							<% end %>
+						</td>
+						<td>
+	    					<%= link_to 'Eliminar', {:action => "eliminar_bloquecomida",:bloquecomida => pb.id,:id => "ALL"} , :confirm => 'Are you sure?', :method => :delete %>
+						</td>
+					</tr>
+				<% end %>
+	    	</table>
+	    </td>
+	  </tr>
+	  <td colspan=3>
+	  	<hr>
+	  	<hr>
+	  </td>
+	<% end %>
+	<tr>
+		<td colspan=4 align="center">
+			<%= f.submit "Guardar Datos"%>
+		</td>
+	</tr>
+	</table>
+<% end %>
+<br />

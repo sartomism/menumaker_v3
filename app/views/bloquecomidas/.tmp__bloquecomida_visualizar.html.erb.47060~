@@ -1,0 +1,11 @@
+<div align="left" style="float:left;">
+	<%= bloquecomida.nombre %>
+</div>	
+<div align="left" style="float:right;">
+	<%= link_to_remote "Editar",:url => {:action => "editar_bloque",:bloquecomida => bloquecomida.id},:update => "bloquecomida_"+bloquecomida.id.to_s %>
+	<% if bloquecomida.orden > 1 %>	
+		<%= link_to_remote "Intercambiar",:url => {:action => "swap_bloquecomida",:bloquecomida => bloquecomida.id},:update => "general" %>
+	<% end %>	
+	<%= link_to_remote "Nuevo Plato",:url => {:action => "nuevoplato_bloquecomida",:bloquecomida => bloquecomida.id},:update => "general" %>
+	<%= link_to_remote "Borrar",:url => {:action => "borrar_bloquecomida",:bloquecomida => bloquecomida.id},:update => "general" %>
+</div>

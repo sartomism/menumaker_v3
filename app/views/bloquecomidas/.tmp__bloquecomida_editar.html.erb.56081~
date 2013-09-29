@@ -1,0 +1,6 @@
+ 
+<% remote_form_for "bloque",:url => {:action => "guardar_bloque"},:update => "bloquecomida_"+bloquecomida.id.to_s do |f| %>
+	<%= f.hidden_field "bloque",:value => bloquecomida.id %> 
+	<%= image_tag("bloque-icon.png", :border=>0, :height => "30px",:width => "30px")%> <%= f.text_field "nombre",:value => bloquecomida.nombre %>
+	<%= f.submit "guardar" %> 
+<% end %>

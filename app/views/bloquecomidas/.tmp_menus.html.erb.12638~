@@ -1,0 +1,21 @@
+<br>
+<table id="borders">
+	<tr>
+		<th>Menú</th><th>dias</th><th>Acciones</th>
+	</tr>
+	<% for menu in @menus %>
+		<tr>
+			<td>
+				<%= menu.nombre %>
+			</td>
+			<td>
+				<%= menu.dias %>
+			</td>
+			<td>
+				<%= link_to "Ver recetas",:action => "ver_recetas_menu",:id => menu.id.to_s%>
+				<%= link_to "Eliminar",:action => "eliminar_menu",:id => menu.id.to_s%>
+			</td>
+		</tr>	
+	<% end %>
+</table>
+<br>

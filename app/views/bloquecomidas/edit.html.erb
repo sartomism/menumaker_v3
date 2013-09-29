@@ -1,0 +1,20 @@
+<h1>Editing bloquecomida</h1>
+
+<% form_for(@bloquecomida) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :orden %><br />
+    <%= f.text_field :orden %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @bloquecomida %> |
+<%= link_to 'Back', bloquecomidas_path %>

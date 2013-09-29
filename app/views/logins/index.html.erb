@@ -1,0 +1,125 @@
+<table  align="center">
+	<td>
+		<div class="default_background" style="width:500px;height:200px;margin:100px;">
+			<% if @error == nil %>
+				<% if @sesion.get_user == nil %>
+					<% form_for "login",:url => {:action => "login_user"} do |f| %>
+							<table align="center" style="margin-top:0px;">
+								<tr>
+									<td style="font-size:150%;font-weight:bold;color:#AAA;" align="left">
+										Menumaker v3.0
+									</td>
+								</tr>
+							</table>
+							<table align="left">
+								<td>
+									<%= image_tag("lock.png", :border=>0, :height => "125px",:width => "125px")%>										
+								</td>
+							</table>
+							<table align="right" style="margin-top:0px;">
+								<tr>
+									<td style="height:10px;" align="left"></td>
+								</tr>
+								<tr>
+									<td style="height:30px;font-size:80%;" align="right">
+									¿No es un usuario registrado?
+									</td>
+									<td align="right">
+										<%= link_to image_tag("new-button.png", :border=>0, :height => "50px",:width => "50px"),{:action => "signup",:id=>"ALL",:login=>"newuser"},:class => "image_link" %>
+									</td>
+								</tr>
+								<tr>
+									<td style="font-size:200%;font-weight:bold;" align="right">
+										Login:
+									</td>
+									<td>
+										<%= f.text_field "login",:size => 20 %>
+									</td>
+								</tr>
+								<tr>
+									<td style="font-size:200%;font-weight:bold;"  align="right" >
+										Password:
+									</td>
+									<td>
+										<%= f.password_field "password",:size => 20%>
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2 align="right">
+									<input id="comment_submit" name="commit" class="image_button" src="/images/ok-button.png" type="image" value="Comment" />																	
+									</td>
+								</tr>
+							</table>
+					<% end %>
+				<% else %>
+					<% if @sesion.get_user %>
+						<table align="center" style="margin-top:0px;">
+							<tr>
+								<td style="font-size:150%;font-weight:bold;color:#AAA;" align="left">
+									Menumaker v3.0
+								</td>
+							</tr>
+						</table>
+						<table align="left">
+							<tr>
+								<td>
+									<%= image_tag("unlock.png", :border=>0, :height => "125px",:width => "125px")%>										
+								</td>
+							</tr>
+								<tr>
+									<td style="height:10px;" align="center">
+										<%= @sesion.get_user.login.to_s %>
+									</td>
+								</tr>
+						</table>
+							<table align="right" style="margin-top:0px;">
+								<tr>
+									<td style="font-size:150%;font-weight:bold;" align="left">
+										Finalizar Sesión
+									</td>
+									<td align="right">
+										<%= link_to image_tag("cancel.png", :border=>0, :height => "50px",:width => "50px"),{:action => "logout",:id=>"ALL"},:class => "image_link" %>
+									</td>
+								</tr>
+								<tr>
+									<td style="font-size:150%;font-weight:bold;" align="left">
+										Recetas
+									</td>
+									<td>
+										<%= link_to image_tag("cookbook.png", :border=>0, :height => "50px",:width => "50px"),{:controller=>"recetas",:action => "index"},:class => "image_link" %>
+									</td>
+								</tr>
+								<tr>
+									<td style="font-size:150%;font-weight:bold;"  align="left" >
+										Lista de la compra
+									</td>
+									<td>
+										<%= link_to image_tag("shoppingcart.png", :border=>0, :height => "50px",:width => "50px"),{:controller => "bloquecomidas",:id => "ALL",:action => "menus"},:class => "image_link" %>
+									</td>
+								</tr>
+							</table>
+			
+					<% end %>
+				<% end %>
+			<% else %>
+				<div>
+				<table align="center" style="margin-top:30px;">
+					<tr>
+						<td style="height:50px;" align="left"></td>
+					</tr>
+					<tr>
+						<td style="font-size:200%;font-weight:bold;color:#FF0000;" align="center">
+							Identificación
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size:200%;font-weight:bold;color:#FF0000;" align="center">
+							incorrecta
+						</td>
+					</tr>
+				</table>
+				</div>
+			<% end %>
+		</div>
+	</td>
+</table>

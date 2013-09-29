@@ -1,0 +1,42 @@
+<table  align="center">
+	<td>
+		<div class="default_background" style="width:500px;height:200px;margin:100px;">
+			<% form_for "newlogin",:url => {:action => "new_user"} do |f| %>
+				<table align="center">
+					<tr>
+						<td style="font-size:120%;font-weight:bold;color:#AAA;">
+							Introduzca los Datos de registro
+						</td>
+					</tr>
+					<tr>
+						<td>Login</td>
+						<td><%= f.text_field "login",:size => 20,:value => @login %></td>
+					</tr>
+					<tr>
+						<td>Contraseña</td>
+						<td><%= f.password_field "password",:size => 20%></td>
+					</tr>
+					<tr>
+						<td>Repetir Contraseña</td>
+						<td><%= f.password_field "password2",:size => 20%></td>
+					</tr>
+					<tr>
+						<td>e-mail</td>
+						<td><%= f.text_field "email",:size => 20 %></td>
+					</tr>
+					<tr>
+						<td colspan = 2 align="right">
+							<input id="comment_submit" name="commit" class="image_button" src="/images/ok-button.png" type="image" value="Comment" />																	
+						</td>
+						
+					</tr>
+					<tr>
+						<td colspan =2 style="color:#FF0000;font-weight:bolder;">
+							<%= @error %>
+						</td>
+					</tr>
+				</table>
+			<% end %>
+		</div>
+	</td>
+</table>

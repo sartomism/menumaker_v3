@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Bloquecomidas: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= javascript_include_tag "prototype" %>
+</head>
+<body style="margin:0px;">
+<table align="center" style="border-collapse:collapse;">
+	<tr>
+		<td>
+			<div class="cabecera">
+				<table align="center">
+					<tr>
+						<td colspan=4 class="titulo" align="center">
+							Menumaker v3.0
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<%= link_to image_tag("cookbook.png", :border=>0, :height => "50px",:width => "50px"),{:controller=>"recetas",:action => "index"},:class => "image_link" %>							
+						</td>
+						<td align="center">
+							<%= link_to image_tag("menu.png", :border=>0, :height => "50px",:width => "50px"),{:controller => "bloquecomidas",:action => "index"},:class => "image_link" %>			
+						</td>
+						<td align="center">
+							<%= link_to image_tag("shoppingcart.png", :border=>0, :height => "50px",:width => "50px"),{:controller => "bloquecomidas",:id => "ALL",:action => "menus"},:class => "image_link" %>			
+						</td>
+						<td align="center">
+							<%= link_to image_tag("unlock.png", :border=>0, :height => "50px",:width => "50px"),{:controller => "logins",:action => "index"},:class => "image_link" %>			
+						</td>
+					</tr>
+				</table>
+			</div>
+			<%= yield  %>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

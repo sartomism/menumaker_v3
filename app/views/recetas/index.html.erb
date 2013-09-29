@@ -1,0 +1,16 @@
+<script TYPE="text/javascript">
+	
+	function hide_element(nombre) {
+		document.getElementById(nombre).style.display='none';
+	}
+
+	function show_element(nombre) {
+		document.getElementById(nombre).style.display='block';
+	}
+</script>
+<br><br>
+<div id="general" class="default_background">
+	<%= render_partial(:partial => "render_index",:locals => {:recetas => @recetas, :recetas_demas => @recetas_demas}) %>	
+</div>
+
+

@@ -1,0 +1,30 @@
+<br>
+<br>
+<div class="default_background">
+		<% form_for "generar_menu",:url => {:action => "generar_menu"} do |f| %>
+			<%= f.hidden_field "usuario",:value => 1 %>
+			<table align="right">
+				<tr>
+					<td>Menús para </td>
+					<td><%= f.text_field "dias",:value => 7,:size => 5 %> días</td>
+					<td align="right" style="width:200px;">
+						<input name="commit" class="image_button" style="height:50px;width:50px;" src="/images/make.png" type="image" value="Comment" />
+					</td>
+				</tr>
+			</table>
+		<% end %>
+	<fieldset>
+		<legend>
+			<%= image_tag("menu.png", :border=>0, :height => "75px",:width => "75px") %>
+		</legend>
+		<div id="general" class="default_background">
+			<%= render_partial(:partial => "bloquecomida_dia_visualizar",
+				:locals => {
+					:bloquecomidas => @bloquecomidas,
+					:dias => @dias,
+					:dia_actual => @dia_actual,
+					:layout => @layout }) %>	
+		</div>
+	</fieldset>
+</div>
+

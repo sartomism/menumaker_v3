@@ -1,0 +1,47 @@
+<script>
+	highline(3);
+</script>
+
+<fieldset>
+	<legend>
+		<%= image_tag("shop.png", :border=>0, :height => "75px",:width => "75px") %>
+	</legend>
+		
+	<% remote_form_for "etiquetaing",:url => {:action => "guardar_etiquetaings"},:update => "general" do |f| %>
+		<%= f.hidden_field "receta",:value => receta.id.to_s %>
+		<table>
+			<tr>
+				<th>Tipo ingrediente</th>
+				<th>Información</th>
+				<th>Acciones</th>
+			</tr>
+			<% for etiquetaing in etiquetaings do %>
+				<% ingredientesetiqueta = Ingrediente.find(:all,:conditions => "tipo = "+etiquetaing.id.to_s) %>
+				<tr>
+					<td>
+						<% action_on_click="toggle_readonly('etiquetaing_nombre_"+etiquetaing.id.to_s+"');" %>
+						<%= f.text_field "nombre_"+etiquetaing.id.to_s,:value => etiquetaing.nombre.to_s,:readonly => true,:class => "readonly_field",:onclick => action_on_click %>
+					</td>
+					<td>
+						<% cantidad = ingredientesetiqueta.size %>
+						<%= "("+cantidad.to_s+" ingrediente)" %>
+					</td>
+					<td>
+					<% if cantidad == 0 %>
+						<%= link_to_remote "Borrar",:url => {:action => "borrar_etiquetaing",:receta => receta.id, :etiquetaing => etiquetaing.id },:update => "general" %>
+					<% end %>
+
+					</td>
+				</tr>
+			<% end %>
+		<tr>
+			<td align="center" colspan=4>
+				<input name="commit" class="image_button" style="height:50px;width:50px;" src="/images/save.png" type="image" value="Comment" />
+			</td>
+		</tr>
+
+		</table>
+		
+	<% end %>
+		
+</fieldset>

@@ -1,0 +1,43 @@
+	<table id="borders">
+		<tr>
+		<% for dia in dias %>
+			<td><%= dia %></td>
+		<% end %>
+		<td>Nuevo...</td>
+		<td style="border:0px;"></td>
+		</tr>
+		<tr><td colspan=<%= @dias.size+2%>>
+				<table id="borders" algin="center">
+				<% pbe = Platobloqueetiqueta.new %>
+				
+				<% first = bloquecomidas.first %>
+				<% last = bloquecomidas.last %>
+				<% for bloquecomida in bloquecomidas %>
+					<% pbs=Platobloque.find(:all,:conditions => "bloque = "+bloquecomida.id.to_s) %>
+					<tr>
+						<th id="bloquecomida_<%= bloquecomida.id.to_s %>">
+							<%= render_partial(:partial => "bloquecomida_visualizar",:locals => {:bloquecomida => bloquecomida}) %>	
+						</th>
+					</tr>
+					<% for pb in pbs %>
+						<tr>
+							<td>
+								<div id="platobloque_<%= pb.id.to_s %>">
+									<%= render_partial(:partial => "plato_visualizar",:locals => {:platobloque => pb}) %>	
+								</div>	
+							</td>
+						</tr>
+					<%end%>
+				<% end %>
+				<tr>
+					<th>
+						<div align="center">
+							<%= link_to_remote 'Nuevo bloque', :url => {:action => "nuevo_bloque",:dia => @dia,:layout => @layout,:id => "ALL"},:update => "general" %>
+						</div>
+					</th>
+				</tr>
+				</table>
+		</td></tr>
+	</table>
+	<br>
+	

@@ -1,0 +1,15 @@
+<td>
+	<% receta = Receta.find(recetamenu.receta) %>
+	<%= receta.nombre rescue "DESCONOCIDA"%>
+	<% if cantidad_ingredientes == 0 %>
+		<%= (link_to_remote "recalcular",:url=>{:action => "recalcular_recetamenu",:id => recetamenu.id.to_s},:update => "RECETA_MENU_"+recetamenu.id.to_s) rescue "No encontrada" %>
+	<% end %>
+</td>
+<td>
+	<%= recetamenu.personas.to_s%> Personas
+	<% if cantidad_ingredientes == 0 %>
+		<div align="right" class="options">
+			<%= link_to_remote image_tag("edit-icon.png", :border=>0, :height => "20px",:width => "20px"),:url => {:action => "editar_recetamenu",:recetamenu => recetamenu.id},:update => "RECETA_MENU_"+recetamenu.id.to_s,:html =>{:class => "image_link"} %>
+		</div>
+	<% end %>
+</td>
